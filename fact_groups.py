@@ -76,7 +76,7 @@ def choose_groups(groups, reachable_facts, partial_encoding=True):
         group = queue.pop()
         uncovered_facts.difference_update(group)
         result.append(group)
-    print(len(uncovered_facts), "uncovered facts")
+    # print(len(uncovered_facts), "uncovered facts")
     result += [[fact] for fact in uncovered_facts]
     return result
 

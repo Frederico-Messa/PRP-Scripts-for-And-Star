@@ -308,7 +308,7 @@ def compute_model(prog):
         fact_atoms = sorted(fact.atom for fact in prog.facts)
         queue = Queue(fact_atoms)
 
-    print("Generated %d rules." % len(rules))
+    # print("Generated %d rules." % len(rules))
     with timers.timing("Computing model"):
         relevant_atoms = 0
         auxiliary_atoms = 0
@@ -323,10 +323,10 @@ def compute_model(prog):
             for rule, cond_index in matches:
                 rule.update_index(next_atom, cond_index)
                 rule.fire(next_atom, cond_index, queue.push)
-    print("%d relevant atoms" % relevant_atoms)
-    print("%d auxiliary atoms" % auxiliary_atoms)
-    print("%d final queue length" % len(queue.queue))
-    print("%d total queue pushes" % queue.num_pushes)
+    # print("%d relevant atoms" % relevant_atoms)
+    # print("%d auxiliary atoms" % auxiliary_atoms)
+    # print("%d final queue length" % len(queue.queue))
+    # print("%d total queue pushes" % queue.num_pushes)
     return queue.queue
 
 if __name__ == "__main__":

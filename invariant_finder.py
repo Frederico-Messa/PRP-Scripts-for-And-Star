@@ -89,7 +89,7 @@ MAX_CANDIDATES = 100000
 
 def find_invariants(task, reachable_action_params):
     candidates = deque(get_initial_invariants(task))
-    print(len(candidates), "initial candidates")
+    # print(len(candidates), "initial candidates")
     seen_candidates = set(candidates)
 
     balance_checker = BalanceChecker(task, reachable_action_params)
@@ -103,7 +103,7 @@ def find_invariants(task, reachable_action_params):
     while candidates:
         candidate = candidates.popleft()
         if time.perf_counter() - start_time > task.INVARIANT_TIME_LIMIT:
-            print("Time limit reached, aborting invariant generation")
+            # print("Time limit reached, aborting invariant generation")
             return
         if candidate.check_balance(balance_checker, enqueue_func):
             yield candidate

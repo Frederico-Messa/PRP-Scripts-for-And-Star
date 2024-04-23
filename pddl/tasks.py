@@ -257,7 +257,7 @@ def check_atom_consistency(atom, same_truth_value, other_truth_value, atom_is_tr
     if atom in same_truth_value:
         if not atom_is_true:
             atom = atom.negate()
-        print("Warning: %s is specified twice in initial state specification" % atom)
+        # print("Warning: %s is specified twice in initial state specification" % atom)
     
 
 def check_for_duplicates(elements, errmsg, finalmsg):

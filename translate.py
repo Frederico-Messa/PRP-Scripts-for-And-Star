@@ -481,7 +481,7 @@ def translate_task(strips_to_sas, ranges, translation_key,
 
 
 def unsolvable_sas_task(msg):
-    print("%s! Generating unsolvable task..." % msg)
+    # print("%s! Generating unsolvable task..." % msg)
     variables = sas_tasks.SASVariables(
         [2], [-1], [["Atom dummy(val1)", "Atom dummy(val2)"]])
     # We create no mutexes: the only possible mutex is between
@@ -544,10 +544,10 @@ def pddl_to_sas(task):
             task.init, goal_list, actions, axioms, task.use_min_cost_metric,
             implied_facts)
 
-    print("%d effect conditions simplified" %
-          simplified_effect_condition_counter)
-    print("%d implied preconditions added" %
-          added_implied_precondition_counter)
+    # print("%d effect conditions simplified" %
+    #       simplified_effect_condition_counter)
+    # print("%d implied preconditions added" %
+    #       added_implied_precondition_counter)
 
     if DETECT_UNREACHABLE:
         with timers.timing("Detecting unreachable propositions", block=True):

@@ -208,7 +208,7 @@ class VarValueRenaming(object):
                 num_removed += 1
                 if DEBUG:
                     print("Removed operator: %s" % op.name)
-        print("%d operators removed" % num_removed)
+        # print("%d operators removed" % num_removed)
         operators[:] = new_operators
 
     def apply_to_axioms(self, axioms):
@@ -327,4 +327,4 @@ def filter_unreachable_propositions(sas_task):
     # apply_to_task may propagate up Impossible if the goal is simplified
     # to False.
     renaming.apply_to_task(sas_task)
-    print("%d propositions removed" % renaming.num_removed_values)
+    # print("%d propositions removed" % renaming.num_removed_values)

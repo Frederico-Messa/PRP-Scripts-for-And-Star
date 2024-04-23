@@ -93,7 +93,7 @@ class PrologProgram:
                 self.add_fact(pddl.Atom(rule.effect.predicate, rule.effect.args))
                 must_delete_rules.append(i)
         if must_delete_rules:
-            print("Trivial rules: Converted to facts.")
+            # print("Trivial rules: Converted to facts.")
             for rule_no in must_delete_rules[::-1]:
                 del self.rules[rule_no]
 
