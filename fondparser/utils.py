@@ -1,7 +1,7 @@
 # helper classes
-from action import Action
-from predicate import Predicate
-from formula import *
+from fondparser.action import Action
+from fondparser.predicate import Predicate
+from fondparser.formula import *
 
 """
     General purpose utilities

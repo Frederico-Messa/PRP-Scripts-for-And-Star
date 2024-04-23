@@ -1,5 +1,5 @@
 
-from predicate import Predicate
+from fondparser.predicate import Predicate
 
 
 class Formula(object):

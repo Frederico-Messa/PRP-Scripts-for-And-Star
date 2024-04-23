@@ -1,5 +1,5 @@
-from formula import Formula
-from predicate import Predicate
+from fondparser.formula import Formula
+from fondparser.predicate import Predicate
 
 class Action (object):
     """

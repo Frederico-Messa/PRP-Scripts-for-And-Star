@@ -1,10 +1,10 @@
 # my utility function
-from utils import get_contents
+from fondparser.utils import get_contents
 
 # related classes
-from predicate import Predicate
-from formula import *
-from action import Action
+from fondparser.predicate import Predicate
+from fondparser.formula import *
+from fondparser.action import Action
 
 # from stdlib
 import re
