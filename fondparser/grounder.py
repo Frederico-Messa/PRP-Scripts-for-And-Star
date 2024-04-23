@@ -8,8 +8,8 @@ import itertools
 class GroundProblem(Problem):
     """
     Inherits from Problem.
-    Houses the basic data structures for a contingent planning problem that has 
-    been grounded. It will contain all of the attributes and functionality of the 
+    Houses the basic data structures for a contingent planning problem that has
+    been grounded. It will contain all of the attributes and functionality of the
     parent class, Problem.
 
     Inputs:
@@ -98,36 +98,36 @@ class GroundProblem(Problem):
         assert isinstance (p, GroundProblem), "Must compare two ground problems"
 
         if self.objects != p.objects:
-            print "objects"
+            print("objects")
             return False
 
         if self.init != p.init:
             return False
 
         if self.goal != p.goal:
-            print "goal"
+            print("goal")
             return False
 
         if not all ([sa == pa for sa, pa in \
                 zip (sorted (list (self.operators)), \
                 sorted (list (p.operators)))]):
-            print "operators"
+            print("operators")
             return False
 
         if not all ([sp == pp for sp, pp in \
                 zip (sorted (list (self.fluents)), \
                 sorted (list (p.fluents)))]):
-            print "fluents"
-            print "*self*"
-            print sorted( list( self.fluents))
-            print "*p*"
-            print sorted (list( p.fluents))
+            print("fluents")
+            print("*self*")
+            print(sorted( list( self.fluents)))
+            print("*p*")
+            print(sorted (list( p.fluents)))
             return False
 
         if self.types != p.types or self.parent_types != p.parent_types:
-            print "types"
+            print("types")
             return False
-        
+
         return True
 
 
@@ -162,22 +162,6 @@ class GroundProblem(Problem):
             fp.write (op.export (1, sp) + "\n")
 
         fp.write (")") # close define
-
-    def export(self, f_domain, f_problem):
-        """Write out the problem in PDDL.
-        Export operators instead of actions.
-        Export fluents instead of predicates."""
-
-        sp = "    "
-        fp = open(f_domain, "w")
-        self._export_domain (fp, sp)
-        fp.close()
-
-        if self.init is not None:
-            fp = open (f_problem, "w")
-            # _export_problem is same as parent's since init is overwritten
-            self._export_problem (fp, sp)
-            fp.close ()
 
     def _create_param_dict(self, params):
         """
@@ -233,7 +217,7 @@ class GroundProblem(Problem):
         """
 
         d = self._create_param_dict(params)
-        
+
         #if action is not None and action.effect is not None:
             # query the effect for any forall conditionals
             #self._get_unassigned_vars(action.effect, d)
@@ -288,7 +272,7 @@ class GroundProblem(Problem):
         if isinstance(formula, Primitive):
             return Primitive(self._predicate_to_fluent(formula.predicate, assignment, fluent_dict))
         elif isinstance(formula, Forall):
-            
+
             new_conjuncts = []
             var_names, val_generator = self._create_valuations(formula.params)
             for valuation in val_generator:
@@ -297,7 +281,7 @@ class GroundProblem(Problem):
                     new_assignment[k] = assignment[k]
                 new_conjuncts.append(self._partial_ground_formula(formula.args[0], new_assignment, fluent_dict))
             return And(new_conjuncts)
-            
+
         elif isinstance(formula, When):
             return When(self._partial_ground_formula(formula.condition, assignment, fluent_dict),
                         self._partial_ground_formula(formula.result, assignment, fluent_dict))
@@ -329,7 +313,7 @@ class GroundProblem(Problem):
         self.operators = set([])
 
         for a in self.actions:
-            
+
             var_names, val_generator = self._create_valuations(a.parameters, a)
 
             for valuation in val_generator:
@@ -404,15 +388,15 @@ class GroundProblem(Problem):
         }
 
         for k, v in d.iteritems():
-            print "*** %s ***" % k
+            print("*** %s ***" % k)
             if k == "Operators":
                 for op in self.operators:
                     op.dump(lvl=1)  # inherited from superclass Action
             elif hasattr(v, "__iter__"):
                 for item in v:
-                    print "\t" + str(item)
+                    print("\t" + str(item))
             else:
-                print "\t" + str(v)
+                print("\t" + str(v))
 
 
 class Operator(Action):
@@ -422,8 +406,8 @@ class Operator(Action):
     Data structure to contain ground action from the problem.
 
     Attributes:
-        The attributes should be exactly the same as for an Action object, with 
-        the exception that every instance of a Predicate object is actually a 
+        The attributes should be exactly the same as for an Action object, with
+        the exception that every instance of a Predicate object is actually a
         Fluent object (i.e., everything is assumed to be ground).
 
     Methods:
@@ -465,12 +449,12 @@ class Operator(Action):
         """
 
         # for operators, sufficient just to print the name, because pretty self-explanatory
-        print "\t" * lvl + "Operator %s" % self.name
+        print("\t" * lvl + "Operator %s" % self.name)
         if len(self.parameters) > 0:
-            print "\t" * (lvl + 1) + "Parameters: " + \
-                ", ".join([v_type + " " + v_name for v_name, v_type in self.parameters])
+            print("\t" * (lvl + 1) + "Parameters: " + \
+                ", ".join([v_type + " " + v_name for v_name, v_type in self.parameters]))
         else:
-            print "\t" * (lvl + 1) + "Parameters: <none>"
+            print("\t" * (lvl + 1) + "Parameters: <none>")
             #print(lvl + 1) * "\t" + "Precondition: " + str(self.precondition)
         #print(lvl + 1) * "\t" + "Effect: " + str(self.effect)
         #print(lvl + 1) * "\t" + "Observe: " + str(self.observe)

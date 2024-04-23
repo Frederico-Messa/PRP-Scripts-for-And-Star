@@ -14,7 +14,7 @@ def get_contents (fname):
         Return the contents of the given file.
         Strip comments (lines starting with ;)
     """
-    
+
     fp = open (fname, "r")
     contents = fp.read()
     fp.close()

@@ -1,5 +1,5 @@
 
-import os, importlib
+import sys, importlib
 
 from fondparser import grounder
 from fondparser.formula import *
@@ -56,7 +56,7 @@ class VALAction:
 
 def validate(dfile, pfile, sol, val):
 
-    print "\nParsing the problem..."
+    # print("\nParsing the problem...")
 
     problem = grounder.GroundProblem(dfile, pfile)
 
@@ -98,9 +98,9 @@ def validate(dfile, pfile, sol, val):
 
     val.load(sol, fluents)
 
-    print "\nStarting the FOND simulation..."
+    # print("\nStarting the FOND simulation...")
 
-    unhandled = []
+    unhandled: list[State] = []
 
     while open_list:
 
@@ -113,7 +113,7 @@ def validate(dfile, pfile, sol, val):
         a = val.next_action(u)
 
         if not a:
-            G.node[nodes[u]]['label'] = 'X'
+            G.nodes[nodes[u]]['label'] = 'X'
             unhandled.append(u)
         else:
             i = 0
@@ -136,35 +136,35 @@ def validate(dfile, pfile, sol, val):
 
 
     # Analyze the final controller
-    print "\nSimulation finished!\n"
-    print "\n-{ Controller Statistics }-\n"
-    print "\t Nodes: %d" % G.number_of_nodes()
-    print "\t Edges: %d" % G.number_of_edges()
-    print "     Unhandled: %d" % len(unhandled)
-    print "\tStrong: %s" % str(0 == len(list(nx.simple_cycles(G))))
-    print " Strong Cyclic: %s" % str(G.number_of_nodes() == len(nx.single_source_shortest_path(G.reverse(), nodes[goal_state])))
+    # print("\nSimulation finished!\n")
+    # print("\n-{ Controller Statistics }-\n")
+    # print("\t Nodes: %d" % G.number_of_nodes())
+    # print("\t Edges: %d" % G.number_of_edges())
+    # print("     Unhandled: %d" % len(unhandled))
+    # print("\tStrong: %s" % str(0 == len(list(nx.simple_cycles(G)))))
+    # print(" Strong Cyclic: %s" % str(G.number_of_nodes() == len(nx.single_source_shortest_path(G.reverse(), nodes[goal_state]))))
 
-    write_dot(G, 'graph.dot')
+    # write_dot(G, 'graph.dot')
 
-    with open('action.map', 'w') as f:
-        for a in actions:
-            f.write("\n%s:\n" % a)
-            i = 0
-            for outcome in actions[a]:
-                i += 1
-                f.write("%d: %s\n" % (i, " / ".join(["%s -> %s" % (map(str, [unfluents[fl] for fl in c]), map(str, [unfluents[fl] for fl in e])) for (c,e) in outcome.effs])))
+    # with open('action.map', 'w') as f:
+    #     for a in actions:
+    #         f.write("\n%s:\n" % a)
+    #         i = 0
+    #         for outcome in actions[a]:
+    #             i += 1
+    #             f.write("%d: %s\n" % (i, " / ".join(["%s -> %s" % (map(str, [unfluents[fl] for fl in c]), map(str, [unfluents[fl] for fl in e])) for (c,e) in outcome.effs])))
 
     if len(unhandled) > 0:
         with open('unhandled.states', 'w') as f:
             for s in unhandled:
                 f.write("\n%s\n" % _state_string(unfluents, s))
 
-    print "\n     Plan output: graph.dot"
-    print "  Action mapping: action.map"
-    if len(unhandled) > 0:
-        print "Unhandled states: unhandled.states"
+    # print "\n     Plan output: graph.dot"
+    # print "  Action mapping: action.map"
+    # if len(unhandled) > 0:
+    #     print "Unhandled states: unhandled.states"
 
-    print
+    print(len(unhandled) == 0)
 
 
 def _convert_cond_effect(mapping, eff):
@@ -218,17 +218,19 @@ def progress(s, o, m):
                     adds.add(reff)
 
     if 0 != len(adds & dels):
-        print "Warning: Conflicting adds and deletes on action %s" % str(o)
+        print("Warning: Conflicting adds and deletes on action %s" % str(o))
 
     return State(((s.fluents - dels) | adds))
 
 
 if __name__ == '__main__':
     try:
-        (dom, prob, sol, interp) = os.sys.argv[1:]
+        (dom, prob) = sys.argv[1:]
+        sol = sys.stdin
+        interp = 'prp'
     except:
-        print "\nError with input."
-        print USAGE_STRING
-        os.sys.exit(1)
+        print("\nError with input.")
+        print(USAGE_STRING)
+        sys.exit(1)
 
     validate(dom, prob, sol, importlib.import_module("validators.%s" % interp))
