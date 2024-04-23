@@ -99,12 +99,8 @@ def find_invariants(task, reachable_action_params):
             candidates.append(invariant)
             seen_candidates.add(invariant)
 
-    start_time = time.perf_counter()
     while candidates:
         candidate = candidates.popleft()
-        if time.perf_counter() - start_time > task.INVARIANT_TIME_LIMIT:
-            # print("Time limit reached, aborting invariant generation")
-            return
         if candidate.check_balance(balance_checker, enqueue_func):
             yield candidate
 
