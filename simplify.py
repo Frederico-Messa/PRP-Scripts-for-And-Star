@@ -6,7 +6,7 @@ from collections import defaultdict
 from itertools import count
 import sys
 
-DEBUG = True
+DEBUG = False
 
 # TODO:
 # This is all quite hackish and would be easier if the translator were
