@@ -238,6 +238,9 @@ class Problem(object):
         if ":types" in parse_tree:
             if "-" in parse_tree[":types"].named_children():
                 type_hierarchy = PDDL_Utils.read_type(parse_tree[":types"])
+                import sys
+                print("Validator does not support type hierarchy.", file=sys.stderr)
+                exit()
                 self.parent_types = {subtype: parent for subtype, parent in type_hierarchy}
                 self.types = set(parse_tree[":types"].named_children())
                 self.types.discard("-")

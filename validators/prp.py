@@ -49,12 +49,12 @@ def load(pol, fmap):
             continue
 
         nfluents = set([fmap[f.strip().replace(',', '')[4:-1]] for f in \
-                        filter(lambda x: 'not(' == x[:4], \
+                        filter(lambda x: 'not(' == x.strip()[:4], \
                                fluent_line.split(':')[-1][1:].split('/'))])
         pfluents = set([fmap[f.strip().replace(',', '')] for f in \
-                        filter(lambda x: ('not(' != x[:4]) and (len(x) > 0), \
+                        filter(lambda x: ('not(' != x.strip()[:4]) and (len(x) > 0), \
                                fluent_line.split(':')[-1][1:].split('/'))])
-        action = file_lines.pop(0).split(':')[-1].split('/')[0][1:-1].strip().replace(' ', '_')
+        action = file_lines.pop(0).split(':')[-1].split('/')[0].strip().replace(' ', '_')
 
         if STAGE_POL == stage:
             POLICY.append((nfluents, pfluents, action))

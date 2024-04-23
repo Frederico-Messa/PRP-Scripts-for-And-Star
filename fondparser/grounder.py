@@ -181,11 +181,12 @@ class GroundProblem(Problem):
             elif Predicate.OBJECT == param_type:
                 d[param_name] = self.objects.copy()
             else:
+                d[param_name] = set()
                 # for debugging
-                s = "Found a type in the list of parameters that is not in the type_to_obj dict \n"
-                s += "param_type = %s\n" % str(param_type)
-                s += "type_to_obj = %s" % str(self.type_to_obj)
-                raise KeyError(s)
+                # s = "Found a type in the list of parameters that is not in the type_to_obj dict \n"
+                # s += "param_type = %s\n" % str(param_type)
+                # s += "type_to_obj = %s" % str(self.type_to_obj)
+                # raise KeyError(s)
 
         return d
 

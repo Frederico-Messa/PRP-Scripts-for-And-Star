@@ -187,5 +187,6 @@ class PDDL_Tree (object):
         # for easier debugging, put on different lines
         contents = contents.replace(",", ",\n")
         #print contents
+        assert('(' not in contents)
         return eval(contents)
 
