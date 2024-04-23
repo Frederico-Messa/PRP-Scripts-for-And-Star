@@ -53,15 +53,11 @@ class Action(object):
         effect_list = next(iterator)
         try:
             cost_eff_pairs = effects.parse_effects(effect_list)
-            if 1 == len(cost_eff_pairs):
-                cost_eff_pairs = [(cost_eff_pairs[0][0], cost_eff_pairs[0][1], '')]
-            else:
-                cost_eff_pairs = [(cost_eff_pairs[i][0], cost_eff_pairs[i][1], "_DETDUP_%d" % i) for i in range(len(cost_eff_pairs))]
         except ValueError as e:
             raise SystemExit("Error in Action %s\nReason: %s." % (name, e))
         for rest in iterator:
             assert False, rest
-        return [Action(name + suffix, parameters, len(parameters), precondition, eff, cost) for (cost, eff, suffix) in cost_eff_pairs]
+        return [Action(name, parameters, len(parameters), precondition, eff, cost) for (cost, eff) in cost_eff_pairs]
     parse = staticmethod(parse)
     def dump(self):
         print("%s(%s)" % (self.name, ", ".join(map(str, self.parameters))))
